@@ -1,0 +1,39 @@
+温度计 1.0 — 为这台 M5 Mac 制作的菜单栏小工具
+
+使用
+双击“温度计.app”。应用只显示在屏幕顶部菜单栏，不显示 Dock 图标。
+温度计图标右侧默认显示 CPU 传感器中的最高温度，每 3 秒刷新一次。
+点击可查看 CPU 最高/平均温度、GPU 最高温度、系统散热状态和更新时间。
+可切换顶部显示 CPU 或 GPU，以及 3 / 5 / 10 秒刷新间隔；选择自动保存。
+“传感器详情”列出本次成功读取的传感器键值。
+点击“退出温度计”即可停止。重新双击应用可再次启动。
+如需登录自动打开，可在系统设置 → 通用 → 登录项中手动添加本应用。
+
+读数含义
+这是芯片内部温度，不是外壳或键盘表面的温度。
+“最高”和“平均”仅基于成功读取并识别的 CPU/GPU 传感器；传感器数量不等于核心数量。
+整数显示会四舍五入，菜单内保留一位小数。
+散热状态由 macOS 的 thermalState 提供，不由任意温度阈值推断。
+读取失败时显示 --°C / 暂不可用，并自动重试，不生成估计数值。
+仅为当前 M5 传感器映射配置，其他芯片或未来系统更新可能需要修改。
+
+运行方式
+以当前用户运行，无需 sudo 或管理员密码。
+只通过 AppleSMC 的只读操作查询传感器；没有写入硬件、控制风扇或关闭系统保护的代码。
+应用不联网、不收集遥测，不写温度历史文件。
+仅保存显示模式和刷新间隔到本地偏好设置。
+本机编译并使用临时签名，未进行 Apple 公证；适用于这台电脑本地使用。
+
+源码与构建
+Source/ 包含完整 Objective-C 源码，build.sh 可重新构建。
+在终端执行 ./build.sh；需要 macOS Command Line Tools。
+Source/AppKitBridge.h 仅声明本应用使用的公开 AppKit API，运行实现仍由系统 AppKit 提供。
+这是对本机 SDK 多处头文件缺失的构建适配，不修改系统 SDK。
+命令行读数检查：
+./温度计.app/Contents/MacOS/MacTemperature --check
+
+参考与许可
+SMC 只读结构及 M5 传感器键参考 exelban/Stats：
+https://github.com/exelban/stats/blob/master/SMC/smc.swift
+https://github.com/exelban/stats/blob/master/Modules/Sensors/values.swift
+对应 MIT 许可证见 THIRD-PARTY-LICENSE.txt，并随应用一起保留。
