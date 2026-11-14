@@ -15,13 +15,19 @@
 
 ## 编译
 
+把下面这行文字复制给你的 Agent（Codex、Claude Code 或 WorkBuddy 都可以），让它在你的 Mac 上自动构建和打包。
+
+```text
+请在本机 Mac 上获取 https://github.com/wjnmxp/mac-temperature 的源码，检查是否已安装 Xcode Command Line Tools，如果缺少请提示我先安装。进入源码目录执行 zsh build.sh，验证生成的「温度计.app」签名，再用 ditto -c -k --norsrc --keepParent '温度计.app' mac-temperature.zip 打包，并告诉我 ZIP 的完整路径。
+```
+
 在 Mac 上安装 Xcode Command Line Tools。已经安装的可以跳过这条命令。
 
 ```bash
 xcode-select --install
 ```
 
-登录有仓库访问权限的 GitHub 账号，在仓库页面选择 **Code → Download ZIP**，解压后进入包含 `build.sh` 的目录，在终端执行：
+也可以手动编译。在仓库页面选择 **Code → Download ZIP**，解压后进入包含 `build.sh` 的目录，在终端执行：
 
 ```bash
 zsh build.sh
